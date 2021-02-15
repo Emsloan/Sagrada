@@ -36,6 +36,7 @@ public class Main {
                 offer.add(game.bag.remove(i));
             }
 
+
             showOffer(offer);
 
         }
