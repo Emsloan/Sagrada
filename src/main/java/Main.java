@@ -1,15 +1,20 @@
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
+
 public class Main {
 
-    static ArrayList<Board> boards;
+    static ArrayList<Board> patterns;
 
     public static void main(String[] args) {
-
-        boards =
+        patterns = loadPatterns();
 
 
         try (Scanner input = new Scanner(System.in)) {
@@ -56,15 +61,71 @@ public class Main {
 
     }
 
+    private static ArrayList<Board> loadPatterns() throws IOException {
+
+        JSONArray patternList = new JSONArray();
+
+        File tempFile = new File("/windowpatterns.json");
+
+        //JSON parser object to parse read file
+        JSONParser jsonParser = new JSONParser();
+
+//        try opening file
+        try (FileReader reader = new FileReader("windowpatterns.json")) {
+            //Read JSON file
+            Object obj = jsonParser.parse(reader);
+
+            patternList = (JSONArray) obj;
+            System.out.println(patternList);
+
+            //Iterate over employee array
+            patternList.forEach(emp -> parsePatternObject((JSONObject) emp));
+
+//            if file doesn't exist (e.g. first run) create it and populate
+        } catch (FileNotFoundException e) {
+            try (FileWriter file = new FileWriter("windowpatterns.json")) {
+                //We can write any JSONArray or JSONObject instance to the file
+                file.write(patternList.toJSONString());
+                file.flush();
+
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+
+
+
+    }
+
+    private static void parsePatternObject(JSONObject pattern) {
+
+        //Get pattern object within list
+        JSONObject patternObject = (JSONObject) pattern.get("pattern");
+
+        //Get pattern name
+        String name = (String) patternObject.get("name");
+
+        //Get employee last name
+        String lastName = (String) employeeObject.get("lastName");
+        System.out.println(lastName);
+
+        //Get employee website name
+        String website = (String) employeeObject.get("website");
+        System.out.println(website);
+    }
+
     private static void hotSeat(Game game) {
     }
 
     private static void localComputerGame(Game game) {
 
-        while(true){
+        while (true) {
             System.out.println("Please select a window pattern card:");
             showPatterns();
-            try(Scanner scanner = new Scanner(System.in)){
+            try (Scanner scanner = new Scanner(System.in)) {
                 scanner.nextInt();
             }
 
