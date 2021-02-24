@@ -1,16 +1,19 @@
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
 import java.util.Scanner;
 
 public class Main {
 
+    static ArrayList<Board> boards;
 
     public static void main(String[] args) {
 
+        boards =
+
 
         try (Scanner input = new Scanner(System.in)) {
-            send("Welcome to Sagrada. How many player's? (2-4)");
+            send("Welcome to Sagrada. How many players? (2-4)");
             String response;
             Game game;
             while (true) {
@@ -18,37 +21,111 @@ public class Main {
                 int players = 0;
                 try {
                     players = Integer.parseInt(response);
-                }catch (NumberFormatException e){
-                    send("That isn't an acceptable answer. Please enter a number of players. (2-4)");
-                }
-                if(players<5&&players>1){
+                    if (!(players < 5 && players > 0))
+                        throw new NumberFormatException();
                     game = new Game(players);
+
                     break;
-                }
-                else{
+                } catch (NumberFormatException e) {
                     send("That isn't an acceptable answer. Please enter a number of players. (2-4)");
                 }
+
+            }
+            int capacity;
+//            set dice offer capacity for all game types, except for single player with cpu
+            if (game.gameType != 1) {
+                capacity = (game.gameType * 2) + 1;
+            }
+//            single player with cpu capacity set
+            else
+                capacity = (4) + 1;
+            game.offer = new ArrayList<>(capacity);
+            for (int i = 0; i < capacity; i++) {
+                game.offer.add(game.bag.remove(i));
             }
 
-            int capacity = (game.gameType * 2) + 1;
-            List<Game.Dice> offer = new ArrayList<>(capacity);
-            for(int i = 0; i<capacity;i++){
-                offer.add(game.bag.remove(i));
+            if (game.gameType == 1) {
+                localComputerGame(game);
+            } else {
+                hotSeat(game);
             }
 
-
-            showOffer(offer);
 
         }
 
 
     }
 
+    private static void hotSeat(Game game) {
+    }
+
+    private static void localComputerGame(Game game) {
+
+        while(true){
+            System.out.println("Please select a window pattern card:");
+            showPatterns();
+            try(Scanner scanner = new Scanner(System.in)){
+                scanner.nextInt();
+            }
+
+
+        }
+        int x = new Random().nextInt(2);
+        while (!game.won) {
+            if (x % 2 == 0) {
+                playerTurn(game);
+                cpuTurn(game);
+            }
+
+        }
+    }
+
+    private static void showPatterns() {
+    }
+
+    private static void cpuTurn(Game game) {
+        showOffer(game.offer);
+    }
+
+    private static void playerTurn(Game game) {
+
+        showOffer(game.offer);
+        int choice;
+        while (true) {
+            try (Scanner scanner = new Scanner(System.in)) {
+                System.out.println("Select a dice from the offer (1-" + game.offer.size());
+                choice = scanner.nextInt();
+                placeDice(game.offer.remove(choice));
+                break;
+            } catch (NumberFormatException e) {
+                System.out.println("That's not a valid choice.");
+
+            }
+        }
+
+
+    }
+
+
     private static void showOffer(List<Game.Dice> offer) {
 
         for (Game.Dice dice : offer) {
-            send("[" + dice.color.toString() + dice.face + "] ");
+            //            String output = String.format("%s = %d", "joe", 35);
+            String output = String.format("[%s", dice.color.toString());
+            System.out.print(output);
+            for (int i = 0; i < 6 - dice.color.toString().length(); i++) {
+                System.out.print(" ");
+            }
+            System.out.print(dice.face);
+            System.out.print("]  ");
+//            System.out.print(("[" + dice.color.toString() + dice.face + "]  "));
         }
+        System.out.println();
+
+        for (int i = 0; i < offer.size(); i++) {
+            System.out.print(("  ( " + (i + 1) + " )    "));
+        }
+        System.out.println();
     }
 
     private static void send(String s) {

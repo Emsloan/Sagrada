@@ -1,12 +1,15 @@
 import java.util.*;
 
 public class Game {
-
+    boolean won;
     int gameType;
+    List<Game.Dice> offer;
+    ArrayList<Player> players = new ArrayList<Player>();
 
     List<Dice> bag = new ArrayList<>();
 
     public Game(int players) {
+        won = false;
         gameType = players;
         Dice.Color[] colors = new Dice.Color[]{
                 Dice.Color.RED,
@@ -33,6 +36,9 @@ public class Game {
         int face;
         Random random = new Random();
 
+        public Dice() {
+        }
+
         public Dice(Color color) {
 
             this.color = color;
@@ -46,8 +52,5 @@ public class Game {
 
     }
 
-    private class Board {
-
-    }
 
 }
