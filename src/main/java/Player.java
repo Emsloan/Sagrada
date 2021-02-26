@@ -3,5 +3,6 @@ public class Player {
     private Board board;
 
 
-
+    public static void placeDice(Game.Dice dice) {
+    }
 }

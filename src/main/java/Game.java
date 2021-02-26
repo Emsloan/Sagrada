@@ -11,6 +11,9 @@ public class Game {
     public Game(int players) {
         won = false;
         gameType = players;
+        for(int i = 0; i<gameType;i++) {
+            this.players.add(new Player());
+        }
         Dice.Color[] colors = new Dice.Color[]{
                 Dice.Color.RED,
                 Dice.Color.BLUE,

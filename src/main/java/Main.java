@@ -67,19 +67,21 @@ public class Main {
 
     private static void localComputerGame(Game game) {
 
+//        TODO: get player choice for pattern card, update game.player.board.pattern to match pattern choice
         while (true) {
             System.out.println("Please select a window pattern card:");
             showPatterns();
             try (Scanner scanner = new Scanner(System.in)) {
                 scanner.nextInt();
+            } catch (NumberFormatException e){
+
             }
-
-
         }
         int x = new Random().nextInt(2);
         while (!game.won) {
             if (x % 2 == 0) {
-                playerTurn(game);
+//                TODO:each loop active player is updated and passed to 'turn' method
+                playerTurn(game,game.players.get(0));
                 cpuTurn(game);
             }
 
@@ -87,13 +89,14 @@ public class Main {
     }
 
     private static void showPatterns() {
+        System.out.println(patterns);
     }
 
     private static void cpuTurn(Game game) {
         showOffer(game.offer);
     }
 
-    private static void playerTurn(Game game) {
+    private static void playerTurn(Game game,Player player) {
 
         showOffer(game.offer);
         int choice;
@@ -101,7 +104,7 @@ public class Main {
             try (Scanner scanner = new Scanner(System.in)) {
                 System.out.println("Select a dice from the offer (1-" + game.offer.size());
                 choice = scanner.nextInt();
-                placeDice(game.offer.remove(choice));
+                Player.placeDice(game.offer.remove(choice));
                 break;
             } catch (NumberFormatException e) {
                 System.out.println("That's not a valid choice.");
