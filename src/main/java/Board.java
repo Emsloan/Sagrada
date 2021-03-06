@@ -2,12 +2,19 @@ import java.io.Serializable;
 import java.util.Arrays;
 
 public class Board extends Game.Dice implements java.io.Serializable {
+
+
+
     Space[][] windowPattern = new Space[4][5];
     Game.Dice[][] frame = new Game.Dice[4][5];
     String name;
     int difficulty;
     enum Color {
-        RED,YELLOW, GREEN, BLUE , PURPLE,BLANK
+        RED,YELLOW, GREEN, BLUE , PURPLE, BLANK
+    }
+
+    public void setWindowPattern(Space[][] windowPattern) {
+        this.windowPattern = windowPattern;
     }
 
     public Board(String name, int difficulty) {

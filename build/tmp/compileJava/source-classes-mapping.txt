@@ -2,13 +2,13 @@ Game.java
  Game
  Game$Dice
  Game$Dice$Color
-PatternBuilder.java
- PatternBuilder
-Main.java
- Main
+Player.java
+ Player
 Board.java
  Board
  Board$Color
  Board$Space
-Player.java
- Player
+PatternBuilder.java
+ PatternBuilder
+Main.java
+ Main

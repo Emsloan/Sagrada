@@ -3,15 +3,17 @@ import java.util.*;
 public class Game {
     boolean won;
     int gameType;
+    boolean computer;
     List<Game.Dice> offer;
     ArrayList<Player> players = new ArrayList<Player>();
 
     List<Dice> bag = new ArrayList<>();
 
-    public Game(int players) {
+    public Game(int players, boolean computer) {
         won = false;
+        this.computer=computer;
         gameType = players;
-        for(int i = 0; i<gameType;i++) {
+        for(int i = 0; i<players;i++) {
             this.players.add(new Player());
         }
         Dice.Color[] colors = new Dice.Color[]{
