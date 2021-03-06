@@ -11,12 +11,13 @@ import org.json.simple.parser.ParseException;
 
 public class Main {
 
-    static JSONArray patterns;
+    static ArrayList<Board> patterns;
 
     public static void main(String[] args) throws IOException {
-        patterns = PatternBuilder.builder();
+        patterns = PatternBuilder.builder2();
 
 
+//        Ask for number of players
         try (Scanner input = new Scanner(System.in)) {
             send("Welcome to Sagrada. How many players? (2-4)");
             String response;
@@ -73,8 +74,9 @@ public class Main {
             showPatterns();
             try (Scanner scanner = new Scanner(System.in)) {
                 scanner.nextInt();
+                break;
             } catch (NumberFormatException e){
-
+                System.out.println("That isn't an acceptable answer, please try again.");
             }
         }
         int x = new Random().nextInt(2);
@@ -89,7 +91,10 @@ public class Main {
     }
 
     private static void showPatterns() {
-        System.out.println(patterns);
+        for( Board b:patterns){
+            System.out.println(b.toString());
+        }
+
     }
 
     private static void cpuTurn(Game game) {

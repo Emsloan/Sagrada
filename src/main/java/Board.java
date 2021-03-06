@@ -1,4 +1,7 @@
-public class Board extends Game.Dice{
+import java.io.Serializable;
+import java.util.Arrays;
+
+public class Board extends Game.Dice implements java.io.Serializable {
     Space[][] windowPattern = new Space[4][5];
     Game.Dice[][] frame = new Game.Dice[4][5];
     String name;
@@ -29,7 +32,7 @@ public class Board extends Game.Dice{
     }
 
 
-    static class Space  {
+    static class Space implements java.io.Serializable {
         int face;
         Color color;
 
@@ -52,5 +55,15 @@ public class Board extends Game.Dice{
         }
 
 
+    }
+
+    @Override
+    public String toString() {
+        return "Board{" +
+                "windowPattern=" + Arrays.toString(windowPattern) +
+                ", frame=" + Arrays.toString(frame) +
+                ", name='" + name + '\'' +
+                ", difficulty=" + difficulty +
+                '}';
     }
 }
