@@ -7,6 +7,7 @@ import java.util.Scanner;
 public class Main {
 
     static ArrayList<Board> patterns;
+    PlayerWindow playerWindow;
 
     public static void main(String[] args) throws IOException {
         patterns = PatternBuilder.builder();
@@ -69,7 +70,9 @@ public class Main {
             try (Scanner scanner = new Scanner(System.in)) {
                 int choice = scanner.nextInt();
                 choice -= 1;
-                game.players.get(0).board.setWindowPattern(patterns.get(choice).windowPattern);
+                Board.Space[][] window = patterns.get(choice).windowPattern;
+                game.players.get(0).board.setWindowPattern(window);
+                game.players.get(0).gui.setWindowPattern(window);
                 break;
             } catch (NumberFormatException e) {
                 System.out.println("That isn't an acceptable answer, please try again.");
@@ -122,6 +125,9 @@ public class Main {
     }
 
 
+    private static void updateOfferGUI(){
+
+    }
     private static void showOffer(List<Game.Dice> offer) {
 
         for (Game.Dice dice : offer) {

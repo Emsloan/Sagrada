@@ -1,7 +1,7 @@
 import java.io.Serializable;
 import java.util.Arrays;
 
-public class Board extends Game.Dice implements java.io.Serializable {
+public class Board extends PlayerWindow implements java.io.Serializable {
 
 
 
@@ -11,6 +11,10 @@ public class Board extends Game.Dice implements java.io.Serializable {
     int difficulty;
     enum Color {
         RED,YELLOW, GREEN, BLUE , PURPLE, BLANK
+    }
+
+    public Space[][] getWindowPattern() {
+        return windowPattern;
     }
 
     public void setWindowPattern(Space[][] windowPattern) {
@@ -48,11 +52,6 @@ public class Board extends Game.Dice implements java.io.Serializable {
         }
 
         public Space(Color color) {
-            this.color = color;
-        }
-
-        public Space(int face, Color color) {
-            this.face = face;
             this.color = color;
         }
 
